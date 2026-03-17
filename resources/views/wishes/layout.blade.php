@@ -272,7 +272,27 @@
     @if(session('error'))
         <div class="alert alert-error">❌ {{ session('error') }}</div>
     @endif
-
+    @if(session('adult_roast'))
+    <div style="
+        background: rgba(231,76,60,.12);
+        border: 1px solid rgba(231,76,60,.3);
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-bottom: 16px;
+        text-align: center;
+    ">
+        <div style="font-size:2rem; margin-bottom:8px;">😂</div>
+        <div style="font-weight:800; font-size:1.1rem; color:#e74c3c; margin-bottom:6px;">
+            Eh {{ session('adult_name') }}...
+        </div>
+        <div style="color:rgba(255,248,231,.8); font-size:.95rem; font-style:italic;">
+            "{{ session('adult_roast') }}"
+        </div>
+        <div style="margin-top:12px; font-size:.8rem; color:rgba(255,248,231,.4);">
+            Ucapan kamu dah disimpan, tapi duit raya — sorry ye! 🧧
+        </div>
+    </div>
+@endif
     @yield('content')
 </div>
 

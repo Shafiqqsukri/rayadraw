@@ -14,6 +14,8 @@ class Wish extends Model
      */
     protected $fillable = [
         'name',
+        'age',
+        'is_adult',
         'message',
         'photo_path',
         'amount',
@@ -25,9 +27,17 @@ class Wish extends Model
      */
     protected $casts = [
         'is_rolled' => 'boolean',
+        'is_adult'  => 'boolean',
         'amount'    => 'integer',
     ];
 
+    public const ADULT_MESSAGES = [
+    'Dah besar dah! Tahun depan cuba jadi pengagih pula! 😂',
+    'Maaf ye, duit raya untuk budak-budak je. Awak kena bagi duit raya sekarang! 😆',
+    'Umur dah mencecah 20, kena kerja sendiri cari duit raya! 💪',
+    'Hehe, next year jadi uncle/auntie yang bagi duit raya pula ye! 🧧',
+    'Tahniah! Awak dah graduate dari dapat duit raya! 🎓😂',
+    ];
     /**
      * Pool jumlah duit raya virtual (RM)
      * Boleh ubah ikut citarasa

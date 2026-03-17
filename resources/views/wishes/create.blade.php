@@ -128,6 +128,32 @@
                 <div class="field-error">{{ $message }}</div>
             @enderror
         </div>
+        <div class="field">
+    <label>🎂 Umur Kamu</label>
+    <input 
+        type="number" 
+        name="age" 
+        min="1" 
+        max="99"
+        placeholder="Berapa tahun?"
+        id="ageInput"
+        required
+    >
+    <div id="ageWarning" style="
+        display:none;
+        margin-top:8px;
+        padding:12px 16px;
+        background:rgba(231,76,60,.15);
+        border:1px solid rgba(231,76,60,.3);
+        border-radius:10px;
+        color:#e74c3c;
+        font-weight:700;
+        font-size:.9rem;
+        text-align:center;
+    ">
+        😂 Dah besar dah! Mana dapat duit raya!
+    </div>
+</div>
 
         {{-- Ucapan --}}
         <div class="field">
@@ -189,7 +215,17 @@
         if (len > 400) charCount.classList.add('warn');
         if (len > 470) charCount.classList.add('danger');
     });
+    // Age warning
+const ageInput = document.getElementById('ageInput');
+const ageWarning = document.getElementById('ageWarning');
 
+ageInput.addEventListener('input', () => {
+    if (parseInt(ageInput.value) >= 20) {
+        ageWarning.style.display = 'block';
+    } else {
+        ageWarning.style.display = 'none';
+    }
+});
     // Photo preview
     const photoInput = document.getElementById('photoInput');
     const photoPreview = document.getElementById('photoPreview');

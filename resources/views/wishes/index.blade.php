@@ -282,6 +282,17 @@
 
             <div class="wish-body">
                 <div class="wish-name">{{ $wish->name }}</div>
+                @if($wish->is_adult)
+                    <span style="
+                        font-size:.65rem;
+                        background:rgba(231,76,60,.2);
+                        color:#e74c3c;
+                        padding:2px 8px;
+                        border-radius:10px;
+                        font-weight:700;
+                        margin-left:6px;
+                        ">Dah Besar 😂</span>
+                @endif
                 <div class="wish-message">"{{ $wish->message }}"</div>
 
                 <div class="amount-wrap">
@@ -289,7 +300,7 @@
                         class="amount-badge {{ $wish->is_rolled ? 'revealed' : 'pending' }}"
                         id="amount-{{ $wish->id }}"
                     >
-                        {{ $wish->is_rolled ? $wish->formatted_amount : '???' }}
+                     {{ $wish->is_rolled ? $wish->formatted_amount : '???' }}
                     </div>
                     <div class="wish-time">{{ $wish->created_at->diffForHumans() }}</div>
                 </div>

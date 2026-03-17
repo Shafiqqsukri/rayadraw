@@ -34,28 +34,39 @@ class WishController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate input
-        $validated = $request->validate([
-            'name'    => 'required|string|max:100',
-            'message' => 'required|string|max:500',
-            'photo'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+    $validated = $request->validate([
+        'name'    => 'required|string|max:100',
+        'age'     => 'required|integer|min:1|max:99',
+        'message' => 'required|string|max:500',
+        'photo'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
 
-        // Handle upload gambar
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('wishes', 'public');
-        }
+    $photoPath = null;
+    if ($request->hasFile('photo')) {
+        $photoPath = $request->file('photo')->store('wishes', 'public');
+    }
 
-        // Simpan ke database
-        Wish::create([
-            'name'       => $validated['name'],
-            'message'    => $validated['message'],
-            'photo_path' => $photoPath,
-        ]);
+    $isAdult = $validated['age'] >= 20;
+
+    Wish::create([
+        'name'       => $validated['name'],
+        'age'        => $validated['age'],
+        'is_adult'   => $isAdult,
+        'message'    => $validated['message'],
+        'photo_path' => $photoPath,
+    ]);
+
+    if ($isAdult) {
+        // Ambil mesej lawak random
+        $roast = Wish::ADULT_MESSAGES[array_rand(Wish::ADULT_MESSAGES)];
 
         return redirect()->route('wishes.index')
-            ->with('success', 'Ucapan kamu dah disimpan! 🎉');
+            ->with('adult_roast', $roast)
+            ->with('adult_name', $validated['name']);
+    }
+
+    return redirect()->route('wishes.index')
+        ->with('success', 'Ucapan kamu dah disimpan! Tunggu roll duit raya! 🎉');
     }
 
     /**
