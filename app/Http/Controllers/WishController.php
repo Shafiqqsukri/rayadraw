@@ -107,6 +107,7 @@ class WishController extends Controller
                 'name'    => $wish->name,
                 'amount'  => $amount,
                 'photo'   => $wish->photo_url,
+                'is_adult' => $wish->is_adult,
             ];
         }
 

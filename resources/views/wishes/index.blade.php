@@ -339,36 +339,45 @@
 
             // Reveal satu-satu dengan delay
             data.wishes.forEach((wish, index) => {
-                setTimeout(() => {
-                    const badge = document.getElementById(`amount-${wish.id}`);
-                    const card = document.getElementById(`wish-${wish.id}`);
+    setTimeout(() => {
+        const badge = document.getElementById(`amount-${wish.id}`);
+        const card = document.getElementById(`wish-${wish.id}`);
 
-                    if (badge) {
-                        badge.classList.remove('rolling');
-                        badge.classList.add('revealed');
-                        badge.textContent = `RM ${wish.amount}`;
-                    }
+        if (badge) {
+            badge.classList.remove('rolling');
+            
+            if (wish.is_adult) {
+                // Orang tua — tak dapat duit raya 😂
+                badge.classList.add('revealed');
+                badge.style.background = 'rgba(231,76,60,.15)';
+                badge.style.color = '#e74c3c';
+                badge.textContent = '😂 Takde';
+            } else {
+                // Budak-budak — dapat duit raya! 🧧
+                badge.classList.add('revealed');
+                badge.textContent = `RM ${wish.amount}`;
+            }
+        }
 
-                    if (card) {
-                        card.classList.add('revealed');
-                    }
+        if (card) {
+            card.classList.add('revealed');
+        }
 
-                    // Confetti untuk reveal terakhir
-                    if (index === data.wishes.length - 1) {
-                        launchConfetti();
-                        btn.closest('.roll-section').innerHTML = `
-                            <p style="color:var(--gold);font-weight:700;margin-bottom:12px;">✅ Semua dah dapat duit raya!</p>
-                            <form action="{{ route('wishes.reset') }}" method="POST" style="display:inline;">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn btn-outline" onclick="return confirm('Reset semua rolls?')">
-                                    🔄 Roll Semula
-                                </button>
-                            </form>
-                        `;
-                    }
+        if (index === data.wishes.length - 1) {
+            launchConfetti();
+            btn.closest('.roll-section').innerHTML = `
+                <p style="color:var(--gold);font-weight:700;margin-bottom:12px;">✅ Semua dah dapat result!</p>
+                <form action="{{ route('wishes.reset') }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-outline" onclick="return confirm('Reset semua rolls?')">
+                        🔄 Roll Semula
+                    </button>
+                </form>
+            `;
+        }
 
-                }, index * 400); // 400ms delay antara setiap reveal
-            });
+    }, index * 400);
+});
 
         } catch (err) {
             alert('Ralat semasa roll. Cuba semula!');
