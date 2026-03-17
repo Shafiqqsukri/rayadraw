@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+       $middleware->trustProxies(at: '*');
+    
+        // kalau ada alias invite code tu, kekalkan jugak
+         $middleware->alias([
+            'invite' => \App\Http\Middleware\CheckInviteCode::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
